@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AI\SimpleAI.cpp" />
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="CommonClass\Map.cpp" />
     <ClCompile Include="Game_engine\GameEngine.cpp" />
     <ClCompile Include="Game_engine\KeyPress.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI\SimpleAI.h" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="CommonClass\Coordinate.h" />
     <ClInclude Include="CommonClass\Map.h" />
     <ClInclude Include="FileLoad\Audio.h" />

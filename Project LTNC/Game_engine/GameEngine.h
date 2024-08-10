@@ -29,6 +29,9 @@ private:
 	Coordinate mousePosition;
 
 	Audio sound;
+
+	
+
 public:
 	GameEngine(int _width, int _height, int _gameMode);
 	~GameEngine();

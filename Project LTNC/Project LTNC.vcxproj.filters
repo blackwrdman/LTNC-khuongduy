@@ -43,6 +43,9 @@
     <ClCompile Include="AI\SimpleAI.cpp">
       <Filter>AI</Filter>
     </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>CommonClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SFMLRenderer\Button.h">
@@ -83,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="AI\SimpleAI.h">
       <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>CommonClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

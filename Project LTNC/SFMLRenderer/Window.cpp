@@ -22,7 +22,7 @@ void Window::LoadMenu() {
 	painter->DrawTexture(texture.GetMenuTexture());
 
 	const int numButton = 4;
-	Button buttonList[numButton];
+	Button buttonList[numButton]; 
 	buttonList[0].SetType(BUTTON::BUTTON_PVE);
 	buttonList[1].SetType(BUTTON::BUTTON_PVP);
 	buttonList[2].SetType(BUTTON::BUTTON_MUSIC);
@@ -172,6 +172,8 @@ void Window::RenderGameInfo(GameEngine* _gameEngine) {
 		turnColor = sf::Color::Blue;
 	}
 	painter->DrawText(font.GetArialFont(), turn, pos1 - sf::Vector2f(157.0f, -75.0f), textSize, turnColor);
+
+	painter->DrawText(font.GetArialFont(), "Kana is here", pos1 - sf::Vector2f(0.0f, -75.0f), textSize, turnColor);
 
 	sf::Vector2f size2(450.0f, 242.0f);
 	sf::Vector2f pos2(window->getSize().x - size2.x / 2.0f, window->getSize().y - size2.y / 2.0f);
