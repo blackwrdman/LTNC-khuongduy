@@ -43,7 +43,7 @@
     <ClCompile Include="AI\SimpleAI.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="Clock.cpp">
+    <ClCompile Include="CommonClass\Clock.cpp">
       <Filter>CommonClass</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,7 +87,7 @@
     <ClInclude Include="AI\SimpleAI.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="Clock.h">
+    <ClInclude Include="CommonClass\Clock.h">
       <Filter>CommonClass</Filter>
     </ClInclude>
   </ItemGroup>

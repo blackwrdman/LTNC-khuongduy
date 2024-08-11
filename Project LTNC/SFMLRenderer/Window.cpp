@@ -5,6 +5,7 @@ Window::Window(int _width, int _height, std::string _title) : width(_width), hei
 	painter = new Painter(window);
 	mode = MODE::MODE_MENU;
 	isMusicOn = true;
+	isTimeLimitChosen = false;
 }
 Window::~Window() {
 	delete painter;
@@ -14,8 +15,11 @@ void Window::Run() {
 	music.PlaySoundtrack();
 	while (mode != MODE::MODE_EXIT) {
 		if (mode == MODE::MODE_MENU) LoadMenu();
-		else if (mode == MODE::MODE_PVE) LoadGame(1);
-		else if (mode == MODE::MODE_PVP) LoadGame(2);
+		else if (!isTimeLimitChosen) LoadTimeMode();
+		else {
+			if (mode == MODE::MODE_PVE) LoadGame(1);
+			else if (mode == MODE::MODE_PVP) LoadGame(2);
+		}
 	}
 }
 void Window::LoadMenu() {
@@ -33,6 +37,32 @@ void Window::LoadMenu() {
 	std::string s = isMusicOn ? "On" : "Off";
 	buttonList[2].SetString("Music: " + s);
 	buttonList[3].SetString("Exit");
+
+	for (int i = 0; i < numButton; i++) {
+		buttonList[i].SetPosition(sf::Vector2f(335.0f, 102.0f + i * 156.0f));
+		buttonList[i].SetSize(sf::Vector2f(450.0f, 110.0f));
+		buttonList[i].SetThick(sf::Vector2f(0.0f, 0.0f));
+		buttonList[i].SetFillColor(sf::Color(80, 175, 100, 255));
+		buttonList[i].SetTextSize(50);
+	}
+
+	KeyPress key(window);
+	key.UpdateKey();
+	ActiveButton(nullptr, key.GetKey(), buttonList, numButton);
+	window->display();
+}
+void Window::LoadTimeMode() {
+	painter->DrawTexture(texture.GetMenuTexture());
+
+	const int numButton = 3;
+	Button buttonList[numButton];
+	buttonList[0].SetType(BUTTON::BUTTON_TIME_LIMIT);
+	buttonList[1].SetType(BUTTON::BUTTON_TIME_LIMIT);
+	buttonList[2].SetType(BUTTON::BUTTON_TIME_LIMIT);
+
+	buttonList[0].SetString("1 minute");
+	buttonList[1].SetString("5 minutes");
+	buttonList[2].SetString("10 minutes");
 
 	for (int i = 0; i < numButton; i++) {
 		buttonList[i].SetPosition(sf::Vector2f(335.0f, 102.0f + i * 156.0f));
@@ -172,8 +202,13 @@ void Window::RenderGameInfo(GameEngine* _gameEngine) {
 		turnColor = sf::Color::Blue;
 	}
 	painter->DrawText(font.GetArialFont(), turn, pos1 - sf::Vector2f(157.0f, -75.0f), textSize, turnColor);
-
-	painter->DrawText(font.GetArialFont(), "Kana is here", pos1 - sf::Vector2f(0.0f, -75.0f), textSize, turnColor);
+	
+	if (_gameEngine->GetStatus() == STATUS::RUNNING) {
+		sf::Time elapsed = _gameEngine->Clock1()->Restart();
+		_gameEngine->Clock1()->UpdateTime(elapsed);
+	}
+	unsigned int time = _gameEngine->Clock1()->GetTime().asSeconds();
+	painter->DrawText(font.GetArialFont(), std::to_string(100 - time), pos1 - sf::Vector2f(0.0f, -75.0f), textSize, turnColor);
 
 	sf::Vector2f size2(450.0f, 242.0f);
 	sf::Vector2f pos2(window->getSize().x - size2.x / 2.0f, window->getSize().y - size2.y / 2.0f);
@@ -219,6 +254,8 @@ void Window::ActiveButton(GameEngine* _gameEngine, int _key, Button _buttonList[
 						isMusicOn = true;
 					}
 					break;
+				case BUTTON::BUTTON_TIME_LIMIT:
+					isTimeLimitChosen = true;
 				}
 			}
 		}

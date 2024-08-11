@@ -28,6 +28,7 @@ private:
 	Font font;
 	Texture texture;
 
+	bool isTimeLimitChosen;
 	bool isMusicOn;
 public:
 	Window(int _width = 500, int _height = 500, std::string _title = "Demo game");
@@ -38,6 +39,7 @@ public:
 
 	void Run();
 	void LoadMenu();
+	void LoadTimeMode();
 	void LoadGame(int _gameMode);
 	void RenderGameInfo(GameEngine* _gameEngine);
 	void RenderGameResult(GameEngine* _gameEngine, int _key);
