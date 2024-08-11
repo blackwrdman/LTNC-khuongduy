@@ -29,6 +29,9 @@ GameEngine::GameEngine(int _boardWidth, int _boardHeight, int _gameMode) {
 	winner = p1;
 
 	mousePosition = Coordinate{ 0, 0 };
+
+	clock1 = new Clock();
+	clock2 = new Clock();
 }
 GameEngine::~GameEngine() {
 	delete winner;
@@ -164,3 +167,4 @@ void GameEngine::Restart() {
 
 	status = STATUS::RUNNING;
 }
+

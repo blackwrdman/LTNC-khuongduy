@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../CommonClass/Map.h"
+#include "../CommonClass/Clock.h"
 #include "Player.h"
 #include "KeyPress.h"
 #include "../AI/SimpleAI.h"
@@ -30,7 +31,8 @@ private:
 
 	Audio sound;
 
-	
+	Clock* clock1;
+	Clock* clock2;
 
 public:
 	GameEngine(int _width, int _height, int _gameMode);
@@ -57,4 +59,7 @@ public:
 	bool CheckHave5Length(int _arr[]);
 
 	void Restart();
+
+	Clock* Clock1() { return clock1; }
+	Clock* Clock2() { return clock2; }
 };
