@@ -10,6 +10,8 @@
 const int BOARD_WIDTH = 25;
 const int BOARD_HEIGHT = 21;
 
+const int TIME_LIMIT[] = { 1 * 60, 5 * 60, 10 * 60};
+
 enum MODE {
 	MODE_MENU,
 	MODE_PVE,
@@ -28,8 +30,9 @@ private:
 	Font font;
 	Texture texture;
 
-	bool isTimeLimitChosen;
 	bool isMusicOn;
+
+	sf::Time timeLimit;
 public:
 	Window(int _width = 500, int _height = 500, std::string _title = "Demo game");
 	~Window();

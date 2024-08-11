@@ -19,3 +19,7 @@ sf::Time Clock::GetTime() {
 void Clock::UpdateTime(sf::Time dt) {
 	this->actualTime += dt;
 }
+
+void Clock::RestartTime() {
+	actualTime = sf::seconds(0);
+}

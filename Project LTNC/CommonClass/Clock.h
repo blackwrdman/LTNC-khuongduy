@@ -11,4 +11,5 @@ public:
 	sf::Time Restart();
 	sf::Time GetTime();
 	void UpdateTime(sf::Time dt);
+	void RestartTime();
 };

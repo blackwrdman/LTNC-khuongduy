@@ -5,7 +5,7 @@ Window::Window(int _width, int _height, std::string _title) : width(_width), hei
 	painter = new Painter(window);
 	mode = MODE::MODE_MENU;
 	isMusicOn = true;
-	isTimeLimitChosen = false;
+	timeLimit = sf::seconds(0);
 }
 Window::~Window() {
 	delete painter;
@@ -15,7 +15,7 @@ void Window::Run() {
 	music.PlaySoundtrack();
 	while (mode != MODE::MODE_EXIT) {
 		if (mode == MODE::MODE_MENU) LoadMenu();
-		else if (!isTimeLimitChosen) LoadTimeMode();
+		else if (timeLimit == sf::seconds(0)) LoadTimeMode();
 		else {
 			if (mode == MODE::MODE_PVE) LoadGame(1);
 			else if (mode == MODE::MODE_PVP) LoadGame(2);
@@ -170,6 +170,17 @@ void Window::RenderGamePause(GameEngine* _gameEngine, int _key) {
 		_gameEngine->SetStatus(STATUS::RUNNING);
 	}
 }
+
+std::string timeFormat(unsigned seconds) {
+	unsigned minute = seconds / 60;
+	unsigned second = seconds % 60;
+	std::string minuteFormat = std::to_string(minute);
+	if (minute < 10) minuteFormat = "0" + minuteFormat;	
+	std::string secondFormat = std::to_string(second);
+	if (second < 10) secondFormat = "0" + secondFormat;
+	std::string format = minuteFormat + ":" + secondFormat;
+	return format;
+}
 void Window::RenderGameInfo(GameEngine* _gameEngine) {
 	sf::Vector2f size1(450.0f, 350.0f);
 	sf::Vector2f pos1(window->getSize().x - size1.x / 2.0f, size1.y / 2.0f);
@@ -196,19 +207,31 @@ void Window::RenderGameInfo(GameEngine* _gameEngine) {
 	if (_gameEngine->Player1()->GetTurn()) { 
 		turn = "X turn";
 		turnColor = sf::Color::Red;
+		
 	}
 	else if (_gameEngine->Player2()->GetTurn()) {
 		turn = "O turn";
 		turnColor = sf::Color::Blue;
+		
 	}
+	unsigned time1 = _gameEngine->Clock1()->GetTime().asSeconds();
+	unsigned displayTime1 = timeLimit.asSeconds() - time1;
+	painter->DrawText(font.GetArialFont(), timeFormat(displayTime1), pos1 - sf::Vector2f(0.0f, -75.0f), textSize, sf::Color::Red);
+
+	unsigned int time2 = _gameEngine->Clock2()->GetTime().asSeconds();
+	unsigned displayTime2 = timeLimit.asSeconds() - time2;
+	painter->DrawText(font.GetArialFont(), timeFormat(displayTime2), pos1 - sf::Vector2f(0.0f, -125.0f), textSize, sf::Color::Blue);
+
 	painter->DrawText(font.GetArialFont(), turn, pos1 - sf::Vector2f(157.0f, -75.0f), textSize, turnColor);
 	
 	if (_gameEngine->GetStatus() == STATUS::RUNNING) {
 		sf::Time elapsed = _gameEngine->Clock1()->Restart();
-		_gameEngine->Clock1()->UpdateTime(elapsed);
+		if (_gameEngine->Player1()->GetTurn())
+			_gameEngine->Clock1()->UpdateTime(elapsed);
+		else 
+			_gameEngine->Clock2()->UpdateTime(elapsed);
 	}
-	unsigned int time = _gameEngine->Clock1()->GetTime().asSeconds();
-	painter->DrawText(font.GetArialFont(), std::to_string(100 - time), pos1 - sf::Vector2f(0.0f, -75.0f), textSize, turnColor);
+	
 
 	sf::Vector2f size2(450.0f, 242.0f);
 	sf::Vector2f pos2(window->getSize().x - size2.x / 2.0f, window->getSize().y - size2.y / 2.0f);
@@ -255,7 +278,8 @@ void Window::ActiveButton(GameEngine* _gameEngine, int _key, Button _buttonList[
 					}
 					break;
 				case BUTTON::BUTTON_TIME_LIMIT:
-					isTimeLimitChosen = true;
+					sf::Time time = sf::seconds(TIME_LIMIT[i]);
+					timeLimit = time;
 				}
 			}
 		}

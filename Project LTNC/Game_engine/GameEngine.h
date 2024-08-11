@@ -62,4 +62,5 @@ public:
 
 	Clock* Clock1() { return clock1; }
 	Clock* Clock2() { return clock2; }
+
 };
