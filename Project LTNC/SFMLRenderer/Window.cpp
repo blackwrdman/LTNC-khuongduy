@@ -218,18 +218,28 @@ void Window::RenderGameInfo(GameEngine* _gameEngine) {
 	unsigned displayTime1 = timeLimit.asSeconds() - time1;
 	painter->DrawText(font.GetArialFont(), timeFormat(displayTime1), pos1 - sf::Vector2f(0.0f, -75.0f), textSize, sf::Color::Red);
 
+	if (displayTime1 <= 0) {
+		_gameEngine->Player1()->setRemainTime(false);
+	}
+
 	unsigned int time2 = _gameEngine->Clock2()->GetTime().asSeconds();
 	unsigned displayTime2 = timeLimit.asSeconds() - time2;
 	painter->DrawText(font.GetArialFont(), timeFormat(displayTime2), pos1 - sf::Vector2f(0.0f, -125.0f), textSize, sf::Color::Blue);
+
+	if (displayTime2 <= 0) {
+		_gameEngine->Player2()->setRemainTime(false);
+	}
 
 	painter->DrawText(font.GetArialFont(), turn, pos1 - sf::Vector2f(157.0f, -75.0f), textSize, turnColor);
 	
 	if (_gameEngine->GetStatus() == STATUS::RUNNING) {
 		sf::Time elapsed = _gameEngine->Clock1()->Restart();
-		if (_gameEngine->Player1()->GetTurn())
+		if (_gameEngine->Player1()->GetTurn()) {
 			_gameEngine->Clock1()->UpdateTime(elapsed);
-		else 
+		}
+		else {
 			_gameEngine->Clock2()->UpdateTime(elapsed);
+		}
 	}
 	
 

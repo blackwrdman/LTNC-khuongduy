@@ -10,6 +10,7 @@ private:
 	int score;
 	bool onTurn;
 	bool isComputer;
+	bool remainTime;
 	Coordinate lastPos;
 public:
 	Player(bool _isComputer) {
@@ -19,6 +20,7 @@ public:
 		score = 0;
 		onTurn = false;
 		lastPos = { -1, -1 };
+		remainTime = true;
 	}
 
 	Coordinate GetLastPosition() { return lastPos; }
@@ -32,4 +34,6 @@ public:
 	std::string GetName() { return name; }
 	void SetName(std::string _name) { name = _name; }
 	bool IsComputer() { return isComputer; }
+	bool IsRemainTime() { return remainTime; }
+	void setRemainTime(bool val) { remainTime = val; }
 };

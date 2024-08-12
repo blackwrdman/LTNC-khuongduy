@@ -21,5 +21,5 @@ void Clock::UpdateTime(sf::Time dt) {
 }
 
 void Clock::RestartTime() {
-	actualTime = sf::seconds(0);
+	this->actualTime = sf::seconds(0);
 }

@@ -68,7 +68,18 @@ void GameEngine::Step(int _key) {
 			}
 		}
 	}
-
+	if (Player1()->IsRemainTime() == false) {
+		winner = Player2();
+		winner->SetScore(winner->GetScore() + 1);
+		status = STATUS::RESULT;
+		sound.PlayResultSound();
+	}	
+	if (Player2()->IsRemainTime() == false) {
+		winner = Player1();
+		winner->SetScore(winner->GetScore() + 1);
+		status = STATUS::RESULT;
+		sound.PlayResultSound();
+	}
 	if (_key == KEY::KEY_ESCAPE) SetStatus(STATUS::PAUSE);
 	if (_key == KEY::KEY_EXIT) SetStatus(STATUS::EXIT);
 }
@@ -165,6 +176,12 @@ void GameEngine::Restart() {
 	winner = p1;
 	p1->SetLastPosition(Coordinate{ -1, -1 });
 	p2->SetLastPosition(Coordinate{ -1, -1 });
+
+	p1->setRemainTime(true);
+	p2->setRemainTime(true);
+
+	clock1->RestartTime();
+	clock2->RestartTime();
 
 	status = STATUS::RUNNING;
 }

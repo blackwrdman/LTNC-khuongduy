@@ -44,6 +44,7 @@ public:
 	Player* Player1() { return p1; }
 	Player* Player2() { return p2; }
 	Player* GetWinner() { return winner; }
+	void SetWinner(Player* player) { winner = player; }
 
 	int GetGameMode() { return gameMode; }
 	Map* GetMap() { return map; }
