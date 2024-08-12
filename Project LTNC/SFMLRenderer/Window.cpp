@@ -269,6 +269,7 @@ void Window::ActiveButton(GameEngine* _gameEngine, int _key, Button _buttonList[
 					SetMode(MODE_EXIT);
 					break;
 				case BUTTON::BUTTON_MENU:
+					timeLimit = sf::seconds(0);
 					if (_gameEngine != nullptr) _gameEngine->SetStatus(STATUS::RETURN);
 					break;
 				case BUTTON::BUTTON_RESTART:
