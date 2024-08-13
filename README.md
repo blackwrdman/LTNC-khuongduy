@@ -30,11 +30,10 @@ cấu hình phù hợp. Sau đó mới có thể chơi được
 - Sử dụng một số lớp của thư viện SFML
 - Học SFML tại https://www.sfml-dev.org/tutorials/2.5/
 ## 5. Kết luận
-- Game đồ họa còn đơn giản, chưa có nhiều chức năng, code vẫn khá dài
 ### *Điều đã làm được*:
-- Tự mình lập trình và thiết kế
 - Chia file theo từng chức năng
 - Tạo được máy có khả năng chơi đơn giản
+- Update tính năng mới, cho phép người chơi chọn giới hạn thời gian suy nghĩ
 ### *Điều chưa làm được*:
 - Tối ưu về bộ nhớ
 - Xây dựng hệ thống kiểm thử tự động
